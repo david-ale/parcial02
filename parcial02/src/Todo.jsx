@@ -1,32 +1,23 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { getTodos } from "./getTodos";
-import { TodoItem } from "./TodoItem";
+import useTodos from "./useTodos";
 
 
-export const TodoApp = (title) =>{
-    const [todos,setTodos] = useState([]);
-
-    const tomarTodos = async() =>{
-        const todos = await getTodos(title)
-        setTodos (todos);
-    }
-
-    useEffect(()=>{
-        tomarTodos();
-    },[])
-
+export const TodoApp = () =>{
+    const todos = useTodos ();
     return (
         <>
-            <h1>Todos list</h1>
-            <h3>{title}</h3>
-            <div>
+            <h1>Todo List:</h1>
+            <ul>
                 {
-                    todos.map((hacer,key)=>{
-                        return <TodoItem key={key} {...hacer}></TodoItem>
+                    todos.map((todo,key) =>{
+                        return <li key={key}>
+                            <p>userId: {todo.userId}</p>
+                            <p>id: {todo.id}</p>
+                            <p>title: {todo.title}</p>
+                            <p>completed: {todo.completed ? 'true' : 'false'} </p>
+                        </li>
                     })
                 }
-            </div>
+            </ul>
         </>
     )
 
